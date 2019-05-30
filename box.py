@@ -20,8 +20,8 @@ class box:
     def set_is_flagged(self, flag):
         self.__is_flagged = flag
 
-    def set_is_mine(self, mine):
-        self.__is_mine = mine
+    def set_as_mine(self):
+        self.__is_mine = True
 
     def set_xCoord(self, xCoord):
         self.__xCoord = xCoord
