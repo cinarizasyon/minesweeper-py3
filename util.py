@@ -1,5 +1,5 @@
 from box import box
-def get_neighboord(xCoord, yCoord, matrix):
+def get_neighboord(xCoord, yCoord, row_count, col_count):
     test_seperation = [
         [xCoord-1, yCoord+1], [xCoord, yCoord+1], [xCoord+1, yCoord+1],
         [xCoord-1, yCoord], [xCoord+1, yCoord],
@@ -8,14 +8,14 @@ def get_neighboord(xCoord, yCoord, matrix):
     neighbors = []
 
     for seperation in test_seperation:
-        if(is_valid_seperation(seperation[0], seperation[1], matrix)):
+        if(is_valid_seperation(seperation[0], seperation[1], row_count,col_count)):
             neighbors.append(seperation)
 
     return neighbors
 
 
-def is_valid_seperation(currX, currY, matrix):
-    return currX >= 0 and currY >= 0 and currX < len(matrix) and currY < len(matrix[0])
+def is_valid_seperation(currX, currY, row_count,col_count):
+    return currX >= 0 and currY >= 0 and currX < row_count and currY < col_count
 
 def print_matrix(matrix):
     for row in range(len(matrix[0])):
@@ -29,11 +29,11 @@ def print_boxes(boxes):
             print(boxes[column][row].get_coord(),sep=' ',end='',flush=True),
         print("")
 
-def generate_boxes(row,column):
-    boxes = []
-    for row in range(row):
-        rowArray=[]
-        for col in range(column):
-            rowArray.append(box(row,col))
-        boxes.append(rowArray)
-    return boxes
+def print_table(table):
+    for row in range(len(table)):
+        for col in range(len(table[0])):
+            print("{0}{1}{2}{3}".format("  ",table[row][col],"  ","|"),end='',flush=True),
+        print("",flush=True)
+        for col in range(len(table[0])):
+            print("-----+",sep='',end='',flush=True),
+        print("",flush=True)

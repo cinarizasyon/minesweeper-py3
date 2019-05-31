@@ -5,6 +5,7 @@ class minesweeper:
 
     def __init__(self,level_no):
         self.level = self.__get_level(level_no)
+        self.set_boxes(self.generate_boxes(self.level.row_count,self.level.column_count))
 
     def get_boxes(self):
         return self.boxes
@@ -12,14 +13,12 @@ class minesweeper:
     def set_boxes(self,boxes):
         self.boxes = boxes
 
-    def generate_boxes(row,column):
-    boxes = []
-    for row in range(row):
-        rowArray=[]
-        for col in range(column):
-            rowArray.append(box(row,col))
-            boxes.append(rowArray)
-    return boxes
+    def generate_boxes(self,row,column):
+        boxes = []
+        for row in range(row):
+            for col in range(column):
+                boxes.append(box(row,col))
+        return boxes
 
     def generate_random_mines(self):
         mines = random.sample(self.boxes,self.level.mine_count)

@@ -1,6 +1,15 @@
 import util
 
-boxes = util.generate_boxes(8,8)
-neighbor_boxes = util.get_neighboord(0,0,boxes)
-util.print_boxes(boxes)
-util.print_matrix(neighbor_boxes)
+test = [
+    [" ","1","2","3","4","5","6","7","8"],
+    ["1"," ","F","F","2"," "," "," "," "],
+    ["2","F","F","1"," "," "," "," "," "],
+    ["3"," "," "," "," "," "," "," "," "],
+    ["4"," ","F","F","2"," "," "," "," "],
+    ["5"," ","F","F","2"," "," "," "," "],
+    ["6"," ","F","F","2"," "," "," "," "],
+    ["7"," ","F","F","2"," "," "," "," "],
+    ["8"," ","F","F","2"," "," "," "," "],
+]
+
+util.print_table(test)
