@@ -4,6 +4,7 @@ class box:
         self.__is_mine = False
         self.__xCoord = xCoord
         self.__yCoord = yCoord
+        self.__is_selected = False
 
     def get_is_flagged(self):
         return self.__is_flagged
@@ -17,6 +18,9 @@ class box:
     def get_yCoord(self):
         return self.__yCoord
 
+    def get_is_selected(self):
+        return self.__is_selected
+
     def set_is_flagged(self, flag):
         self.__is_flagged = flag
 
@@ -28,6 +32,9 @@ class box:
 
     def set_yCoord(self, yCoord):
         self.__yCoord = yCoord
+
+    def set_is_selected(self, selected):
+        self.__is_selected = selected
 
     def get_coord(self):
         return "({0},{1})".format(self.get_xCoord(), self.get_yCoord())

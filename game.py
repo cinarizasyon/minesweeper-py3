@@ -15,10 +15,10 @@ while game_level.lower() != 'q':
         game_level = start_menu.choice()
         if valid_options.index(game_level) != -1:
                 os.system("cls")
-                boxes = minesweeper(int(game_level))
-                boxes.generate_random_mines()
+                game = minesweeper(int(game_level))
+                game.generate_random_mines()
                 while does_the_game_continue():
-                        game_screen.show(boxes,game_level)
+                        game_screen.show(game.get_boxes(),game.level)
                         input("Please select")
 
 
