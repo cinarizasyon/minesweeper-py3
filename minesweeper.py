@@ -6,6 +6,7 @@ class minesweeper:
     def __init__(self,level_no):
         self.level = self.__get_level(level_no)
         self.set_boxes(self.generate_boxes(self.level.row_count,self.level.column_count))
+        self.select_box(0,0)
 
     def get_boxes(self):
         return self.boxes
@@ -29,6 +30,16 @@ class minesweeper:
         box = self.__get_box(xCoord,yCoord)
         if box is not None:
             box.set_is_flagged(not(box.get_is_flagged))
+
+    def select_box(self,xCoord,yCoord):
+        box = self.__get_box(xCoord,yCoord)
+        if box is not None:
+            box.set_is_selected(True)
+    
+    def unselect_box(self,xCoord,yCoord):
+        box = self.__get_box(xCoord,yCoord)
+        if box is not None:
+            box.set_is_selected(False)
 
     def __get_level(self,no):
         result = None

@@ -17,12 +17,3 @@ test = [
 ]
 
 util.print_table(test)
-
-# print(colored("test","grey","on_white"))
-
-test2 = [1,2,3,4,5,6,7,8]
-split = list(util.split_list(test2,3))
-print(split[2][0])
-# for a in len(split):
-#     for b in len(split[0])
-#         print(split[a][b],sep = ' ', end="")
