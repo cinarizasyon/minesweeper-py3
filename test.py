@@ -1,6 +1,7 @@
 import util
 import colorama
 from termcolor import colored, cprint
+from pynput import keyboard
 
 colorama.init()
 
@@ -17,3 +18,13 @@ test = [
 ]
 
 util.print_table(test)
+def on_press(key):
+    try:
+        print('alphanumeric key {0} pressed'.format(key.char))
+    except AttributeError:
+        print('special key {0} pressed'.format(key))
+
+# Collect events until releasead
+with keyboard.Listener(on_press=on_press) as listener:
+    listener.join()
+
