@@ -7,7 +7,7 @@ from pynput import keyboard
 
 game_level = ""
 start_menu_valid_options = ["1","2","3","Q"]
-game_valid_options = ["KEY.UP","KEY.DOWN","KEY.RIGHT","KEY.LEFT","ENTER","F"]
+game_valid_options = ["KEY.UP","KEY.DOWN","KEY.RIGHT","KEY.LEFT","KEY.ENTER","F"]
 game = None
 curr_coord = [0,0]
 flag_count = 0
@@ -27,9 +27,9 @@ def game_choice(choice):
                         tmpX = currX + 1
                 elif choice == "KEY.LEFT": 
                         tmpX = currX - 1
-                elif choice == "ENTER":
-                        pass
-                elif choice == "F":
+                elif choice == "KEY.ENTER":
+                       state = game.open_box(tmpX,tmpY)
+                elif choice == "F":   
                         toggle_flag = game.toggle_flag(tmpX,tmpY,flag_count)
                         if toggle_flag == True: flag_count += 1 
                         elif toggle_flag == False: flag_count -= 1 
@@ -42,7 +42,7 @@ def game_choice(choice):
                         curr_coord = [currX,currY]
                         game_screen.show(game.get_boxes(),game.level)
                         print("Mines left: {}".format(game.level.mine_count - flag_count))
-                        print("currX {0} currY {1} tmpX {2} tmpY {3}".format(currX,currY,tmpX,tmpY))
+                        #print("currX {0} currY {1} tmpX {2} tmpY {3}".format(currX,currY,tmpX,tmpY))
 
 def start_menu_choice(choice):
                 global game
@@ -73,6 +73,7 @@ def on_game_press(key):
         elif key ==  keyboard.Key.down : game_choice("KEY.DOWN")
         elif key == keyboard.Key.right : game_choice("KEY.RIGHT")
         elif key == keyboard.Key.left : game_choice("KEY.LEFT")
+        elif key == keyboard.Key.enter : game_choice("KEY.ENTER")
 
 
 os.system("cls")

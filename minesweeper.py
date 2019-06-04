@@ -51,6 +51,18 @@ class minesweeper:
         if box is not None:
             box.set_is_selected(False)
 
+    def open_box(self,xCoord,yCoord):
+        box = self.__get_box(xCoord,yCoord)
+
+        if box is not None:
+            box.set_state(True)
+            if box.get_is_mine():
+                box.set_tag("M")
+            else:
+                box.set_tag("O")
+            self.__set_box(xCoord,yCoord,box)
+        return box.get_state()
+
     def __get_level(self,no):
         result = None
         for level in constants.levels:

@@ -23,10 +23,13 @@ def convert_to_table(boxes,level):
 
 def box_text(box):
         text= " "
-        if box.get_is_flagged():
-                text = "F"
-        if box.get_is_selected():
-                text += ":s"
+        if box.get_state():
+                text = box.get_tag()
+        else:
+                if box.get_is_flagged():
+                        text = "F"
+                if box.get_is_selected():
+                        text += ":s"
         return text
 
 

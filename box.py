@@ -5,6 +5,8 @@ class box:
         self.__xCoord = xCoord
         self.__yCoord = yCoord
         self.__is_selected = False
+        self.__state = False
+        self.__tag = ""
 
     def get_is_flagged(self):
         return self.__is_flagged
@@ -38,3 +40,15 @@ class box:
 
     def get_coord(self):
         return "({0},{1})".format(self.get_xCoord(), self.get_yCoord())
+
+    def get_state(self):
+        return self.__state
+    
+    def set_state(self,state):
+        self.__state = state
+
+    def get_tag(self):
+        return self.__tag
+
+    def set_tag(self,tag):
+        self.__tag = tag

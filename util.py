@@ -51,6 +51,12 @@ def print_table(table):
                 elif str(table[col][row]).find("F") != -1:
                     colored_text= colored("  " + table[col][row] + "  ","grey","on_yellow")
                     print("{0}{1}".format(colored_text,"|"),end='',flush=True),
+                elif str(table[col][row]).find("M") != -1:
+                    colored_text= colored("  " + table[col][row] + "  ","white","on_red")
+                    print("{0}{1}".format(colored_text,"|"),end='',flush=True),
+                elif str(table[col][row]).find("O") != -1:
+                    colored_text= colored("  " + table[col][row].replace("O"," ") + "  ","white","on_green")
+                    print("{0}{1}".format(colored_text,"|"),end='',flush=True),
                 else:
                     print("{0}{1}{2}{3}".format("  ",table[col][row],"  ","|"),end='',flush=True),
         print("",flush=True)
