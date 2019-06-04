@@ -26,10 +26,20 @@ class minesweeper:
         for mine in mines:
             mine.set_as_mine()
 
-    def toggle_flag(self,xCoord,yCoord):
+    def toggle_flag(self,xCoord,yCoord, flag_count):
         box = self.__get_box(xCoord,yCoord)
+        result = None
         if box is not None:
-            box.set_is_flagged(not(box.get_is_flagged))
+            next_flag_state = not(box.get_is_flagged())
+            if next_flag_state == True:
+                if flag_count < self.level.mine_count:
+                    box.set_is_flagged(next_flag_state)
+                    result = True
+            else:
+                box.set_is_flagged(next_flag_state)
+                result = False
+            self.__set_box(xCoord,yCoord,box)
+        return result
 
     def select_box(self,xCoord,yCoord):
         box = self.__get_box(xCoord,yCoord)
@@ -54,4 +64,9 @@ class minesweeper:
             if box.get_xCoord() == xCoord and box.get_yCoord() == yCoord:
                 result = box
         return result
+
+    def __set_box(self,xCoord,yCoord,box):
+        for box in self.boxes:
+            if box.get_xCoord() == xCoord and box.get_yCoord() == yCoord:
+                box = box
 

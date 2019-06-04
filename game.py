@@ -10,9 +10,10 @@ start_menu_valid_options = ["1","2","3","Q"]
 game_valid_options = ["KEY.UP","KEY.DOWN","KEY.RIGHT","KEY.LEFT","ENTER","F"]
 game = None
 curr_coord = [0,0]
+flag_count = 0
 
 def game_choice(choice):
-        global game, curr_coord
+        global game, curr_coord, flag_count
         if choice in game_valid_options:
                 currX = curr_coord[0]
                 currY = curr_coord[1]
@@ -29,7 +30,9 @@ def game_choice(choice):
                 elif choice == "ENTER":
                         pass
                 elif choice == "F":
-                        pass
+                        toggle_flag = game.toggle_flag(tmpX,tmpY,flag_count)
+                        if toggle_flag == True: flag_count += 1 
+                        elif toggle_flag == False: flag_count -= 1 
                 
                 if util.is_valid_seperation(tmpX,tmpY,game.level.row_count,game.level.column_count):
                         game.unselect_box(currX,currY)
@@ -38,9 +41,8 @@ def game_choice(choice):
                         game.select_box(currX,currY)
                         curr_coord = [currX,currY]
                         game_screen.show(game.get_boxes(),game.level)
+                        print("Mines left: {}".format(game.level.mine_count - flag_count))
                         print("currX {0} currY {1} tmpX {2} tmpY {3}".format(currX,currY,tmpX,tmpY))
-                else:
-                        print("not valid sep." + choice)
 
 def start_menu_choice(choice):
                 global game
