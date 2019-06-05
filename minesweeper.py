@@ -59,8 +59,7 @@ class minesweeper:
     def open_box(self, xCoord, yCoord):
         box = self.__get_box(xCoord, yCoord)
         game_over = False
-        controlled_neighbors = []
-        if box is not None:
+        if box is not None and box.get_is_flagged() == False:
             if box.get_is_mine():
                 self.show_mines()
                 self.lock_boxes()
@@ -71,7 +70,7 @@ class minesweeper:
                 if mine_count > 0:
                     box.set_tag(str(mine_count) + ":o")
                 else:
-                    box.set_tag(" :o")
+                    box.set_tag("C:o")
                 self.__set_box(xCoord, yCoord, box)
                 game_over = False
         return game_over
@@ -91,7 +90,7 @@ class minesweeper:
                 self.__set_box(box.get_xCoord(), box.get_yCoord(), box)
 
     def get_mine_count_in_neighboord(self,xCoord,yCoord):
-        boxes_matrix = list(util.split_list(self.boxes,self.level.mine_count))
+        boxes_matrix = list(util.split_list(self.boxes,self.level.column_count))
         neighboord =  util.get_neighboord(xCoord,yCoord,len(boxes_matrix),len(boxes_matrix[0]))
         mine_count = 0
         for neighbor in neighboord:
@@ -99,7 +98,6 @@ class minesweeper:
            if box is not None and box.get_is_mine():
                mine_count += 1
         return mine_count
-
 
     def __get_level(self, no):
         result = None

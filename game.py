@@ -5,16 +5,15 @@ import game_screen
 from minesweeper import minesweeper
 from pynput import keyboard
 
-game_level = ""
 game_over = False
 start_menu_valid_options = ["1","2","3","Q"]
 game_valid_options = ["KEY.UP","KEY.DOWN","KEY.RIGHT","KEY.LEFT","KEY.ENTER","F"]
-game = None
 curr_coord = [0,0]
 flag_count = 0
+game_level = ""
 
 def game_choice(choice):
-        global game, curr_coord, flag_count, game_over
+        global game, curr_coord, flag_count, game_over, curr_coord
         if choice in game_valid_options:
                 currX = curr_coord[0]
                 currY = curr_coord[1]
@@ -55,8 +54,6 @@ def start_menu_choice(choice):
 
 def on_start_menu_press(key):
         global game_over
-        if game_over:
-                return False
         try:
                 if str.upper(key.char) in start_menu_valid_options:
                         game_level = str.upper(key.char)
@@ -64,6 +61,7 @@ def on_start_menu_press(key):
                                 sys.exit(0)
                                 return False
                         start_menu_choice(game_level)
+                        init()
                 else:
                         print('Please only select options in menu.')
         except AttributeError:
@@ -92,6 +90,11 @@ def draw_start_menu():
         print("Q) Quit")
 
 def init():
+        global game_over, game, curr_coord, flag_count
+        game_over = False
+        game = None
+        curr_coord = [0,0]
+        flag_count = 0
         draw_start_menu()
         with keyboard.Listener(on_press=on_start_menu_press) as menu_listener:
                 menu_listener.join()

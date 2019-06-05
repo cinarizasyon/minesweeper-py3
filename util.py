@@ -45,8 +45,8 @@ def print_boxes(boxes):
 def print_table(table):
     for row in range(len(table)):
         for col in range(len(table[0])):
-                if  str(table[col][row]).find(":s") != -1: #sorun burada olabilir
-                    colored_text= colored("  " + table[col][row].replace(":s","") + "  ","grey","on_white")
+                if  str(table[col][row]).find(":s") != -1:
+                    colored_text= colored("  " + table[col][row].replace(":s","").replace(":o","") + "  ","grey","on_white")
                     print("{0}{1}".format(colored_text,"|"),end='',flush=True),
                 elif str(table[col][row]).find("F") != -1:
                     colored_text= colored("  " + table[col][row] + "  ","grey","on_yellow")
@@ -63,9 +63,3 @@ def print_table(table):
         for col in range(len(table[0])):
             print("-----+",sep='',end='',flush=True),
         print("",flush=True)
-
-def generate_empty_str(length):
-    str = ""
-    for x in range(length):
-        str += " "
-    return str
