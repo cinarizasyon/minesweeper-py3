@@ -6,6 +6,7 @@ from minesweeper import minesweeper
 from pynput import keyboard
 
 game_level = ""
+game_over = False
 start_menu_valid_options = ["1","2","3","Q"]
 game_valid_options = ["KEY.UP","KEY.DOWN","KEY.RIGHT","KEY.LEFT","KEY.ENTER","F"]
 game = None
@@ -13,7 +14,7 @@ curr_coord = [0,0]
 flag_count = 0
 
 def game_choice(choice):
-        global game, curr_coord, flag_count
+        global game, curr_coord, flag_count, game_over
         if choice in game_valid_options:
                 currX = curr_coord[0]
                 currY = curr_coord[1]
@@ -28,7 +29,7 @@ def game_choice(choice):
                 elif choice == "KEY.LEFT": 
                         tmpX = currX - 1
                 elif choice == "KEY.ENTER":
-                        game.open_box(tmpX,tmpY)
+                        game_over = game.open_box(tmpX,tmpY)                   
                 elif choice == "F":   
                         toggle_flag = game.toggle_flag(tmpX,tmpY,flag_count)
                         if toggle_flag == True: flag_count += 1 
@@ -53,38 +54,53 @@ def start_menu_choice(choice):
                         game_listener.join()
 
 def on_start_menu_press(key):
-    try:
-        if str.upper(key.char) in start_menu_valid_options:
-                game_level = str.upper(key.char)
-                if game_level == "Q":
-                        return False
-                # menu_listener.stop()
-                start_menu_choice(game_level)
-        else:
-            print('Please only select options in menu.')
-    except AttributeError:
-        print('Please only select options in menu.')
+        global game_over
+        if game_over:
+                return False
+        try:
+                if str.upper(key.char) in start_menu_valid_options:
+                        game_level = str.upper(key.char)
+                        if game_level == "Q":
+                                sys.exit(0)
+                                return False
+                        start_menu_choice(game_level)
+                else:
+                        print('Please only select options in menu.')
+        except AttributeError:
+                print('Please only select options in menu.')
 
 def on_game_press(key):
-    try:
-        game_choice(str.upper(key.char))
-    except AttributeError:
-        if key == keyboard.Key.up : game_choice("KEY.UP")
-        elif key ==  keyboard.Key.down : game_choice("KEY.DOWN")
-        elif key == keyboard.Key.right : game_choice("KEY.RIGHT")
-        elif key == keyboard.Key.left : game_choice("KEY.LEFT")
-        elif key == keyboard.Key.enter : game_choice("KEY.ENTER")
+        global game_over
+        if game_over:
+                return False
+        try:
+                game_choice(str.upper(key.char))
+        except AttributeError:
+                if key == keyboard.Key.up : game_choice("KEY.UP")
+                elif key ==  keyboard.Key.down : game_choice("KEY.DOWN")
+                elif key == keyboard.Key.right : game_choice("KEY.RIGHT")
+                elif key == keyboard.Key.left : game_choice("KEY.LEFT")
+                elif key == keyboard.Key.enter : game_choice("KEY.ENTER")
 
+def draw_start_menu():
+        os.system("cls")
+        print("Welcome to Minesweeper Game!")
+        print("Please select game level")
+        print("1) Easy")
+        print("2) Medium")
+        print("3) Hard")
+        print("Q) Quit")
 
-os.system("cls")
-print("Welcome to Minesweeper Game!")
-print("Please select game level")
-print("1) Easy")
-print("2) Medium")
-print("3) Hard")
-print("Q) Quit")
-with keyboard.Listener(on_press=on_start_menu_press) as menu_listener:
-        menu_listener.join()
+def init():
+        draw_start_menu()
+        with keyboard.Listener(on_press=on_start_menu_press) as menu_listener:
+                menu_listener.join()
+
+def main():
+        init()
+        
+if __name__ == "__main__":
+        main()
                         
 
 
