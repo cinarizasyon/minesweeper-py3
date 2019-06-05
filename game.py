@@ -28,7 +28,7 @@ def game_choice(choice):
                 elif choice == "KEY.LEFT": 
                         tmpX = currX - 1
                 elif choice == "KEY.ENTER":
-                       state = game.open_box(tmpX,tmpY)
+                        game.open_box(tmpX,tmpY)
                 elif choice == "F":   
                         toggle_flag = game.toggle_flag(tmpX,tmpY,flag_count)
                         if toggle_flag == True: flag_count += 1 
