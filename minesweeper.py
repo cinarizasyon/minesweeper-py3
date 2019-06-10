@@ -34,9 +34,9 @@ class minesweeper:
     def toggle_flag(self, xCoord, yCoord, flag_count):
         box = self.__get_box(xCoord, yCoord)
         result = None
-        if box is not None and box.get_state() == False:
+        if box is not None and box.get_state() is False:
             next_flag_state = not (box.get_is_flagged())
-            if next_flag_state == True:
+            if next_flag_state is True:
                 if flag_count < self.level.mine_count:
                     box.set_is_flagged(next_flag_state)
                     result = True
@@ -59,7 +59,7 @@ class minesweeper:
     def open_box(self, xCoord, yCoord):
         box = self.__get_box(xCoord, yCoord)
         game_over = False
-        if box is not None and box.get_is_flagged() == False:
+        if box is not None and box.get_is_flagged() is False:
             if box.get_is_mine():
                 self.show_mines()
                 self.lock_boxes()
@@ -73,7 +73,7 @@ class minesweeper:
 
     def show_mines(self):
         for mine in self.__mines:
-            if mine.get_is_flagged() == False:
+            if mine.get_is_flagged() is False:
                 mine.set_state(True)
                 mine.set_tag("M")
                 self.__set_box(mine.get_xCoord(), mine.get_yCoord(), mine)
@@ -101,16 +101,17 @@ class minesweeper:
     def lock_boxes(self):
         for box in self.boxes:
             if (
-                box.get_is_mine() == False
-                and box.get_is_flagged() == False
-                and box.get_tag() == ""
+                box.get_is_mine() is False and
+                box.get_is_flagged() is False and
+                box.get_tag() == ""
             ):
                 box.set_state(True)
                 box.set_tag(" :o")
                 self.__set_box(box.get_xCoord(), box.get_yCoord(), box)
 
     def get_mine_count_in_neighboord(self, xCoord, yCoord):
-        boxes_matrix = list(util.split_list(self.boxes, self.level.column_count))
+        boxes_matrix = list(util.split_list(
+            self.boxes, self.level.column_count))
         neighboord = util.get_neighboord(
             xCoord, yCoord, len(boxes_matrix), len(boxes_matrix[0])
         )

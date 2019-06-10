@@ -33,12 +33,15 @@ def game_choice(choice):
             game_over = game.open_box(tmpX, tmpY)
         elif choice == "F":
             toggle_flag = game.toggle_flag(tmpX, tmpY, flag_count)
-            if toggle_flag == True:
+            if toggle_flag is True:
                 flag_count += 1
-            elif toggle_flag == False:
+            elif toggle_flag is False:
                 flag_count -= 1
 
-        if util.is_valid_seperation(tmpX, tmpY, game.level.row_count, game.level.column_count):
+        if util.is_valid_seperation(
+                tmpX, tmpY,
+                game.level.row_count, game.level.column_count):
+
             game.unselect_box(currX, currY)
             currX = tmpX
             currY = tmpY
@@ -46,7 +49,8 @@ def game_choice(choice):
             curr_coord = [currX, currY]
             game_screen.show(game.get_boxes(), game.level)
             print("Mines left: {}".format(game.level.mine_count - flag_count))
-            #print("currX {0} currY {1} tmpX {2} tmpY {3}".format(currX,currY,tmpX,tmpY))
+            # print("currX {0} currY {1} tmpX {2} tmpY {3}".format(
+            #                                               currX,currY,tmpX,tmpY))
 
 
 def start_menu_choice(choice):

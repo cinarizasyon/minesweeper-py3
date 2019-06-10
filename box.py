@@ -43,12 +43,12 @@ class box:
 
     def get_state(self):
         return self.__state
-    
-    def set_state(self,state):
+
+    def set_state(self, state):
         self.__state = state
 
     def get_tag(self):
         return self.__tag
 
-    def set_tag(self,tag):
+    def set_tag(self, tag):
         self.__tag = tag

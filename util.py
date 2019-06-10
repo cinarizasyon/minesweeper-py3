@@ -15,14 +15,20 @@ def get_neighboord(xCoord, yCoord, row_count, col_count):
     neighbors = []
 
     for seperation in test_seperation:
-        if(is_valid_seperation(seperation[0], seperation[1], row_count, col_count)):
+        if(is_valid_seperation(
+                seperation[0], seperation[1],
+                row_count, col_count)):
+
             neighbors.append(seperation)
 
     return neighbors
 
 
 def is_valid_seperation(currX, currY, row_count, col_count):
-    return currX >= 0 and currY >= 0 and currX < row_count and currY < col_count
+    return (currX >= 0 and
+            currY >= 0 and
+            currX < row_count and
+            currY < col_count)
 
 
 def split_list(a, n):
@@ -54,7 +60,9 @@ def print_table(table):
         for col in range(len(table[0])):
             if str(table[col][row]).find(":s") != -1:
                 colored_text = colored(
-                    "  " + table[col][row].replace(":s", "").replace(":o", "") + "  ", "grey", "on_white")
+                    "  " + table[col][row].replace(":s", "")
+                                          .replace(":o", "") +
+                    "  ", "grey", "on_white")
                 print("{0}{1}".format(colored_text, "|"), end='', flush=True),
             elif str(table[col][row]).find("F") != -1:
                 colored_text = colored(
@@ -66,7 +74,8 @@ def print_table(table):
                 print("{0}{1}".format(colored_text, "|"), end='', flush=True),
             elif str(table[col][row]).find(":o") != -1:
                 colored_text = colored(
-                    "  " + table[col][row].replace(":o", "") + "  ", "white", "on_green")
+                    "  " + table[col][row].replace(":o", "") +
+                    "  ", "white", "on_green")
                 print("{0}{1}".format(colored_text, "|"), end='', flush=True),
             else:
                 print("{0}{1}{2}{3}".format(
@@ -75,8 +84,6 @@ def print_table(table):
         for col in range(len(table[0])):
             print("-----+", sep='', end='', flush=True),
         print("", flush=True)
-
-# define our clear function
 
 
 def clear():
