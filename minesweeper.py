@@ -5,11 +5,11 @@ from box import box
 
 
 class minesweeper:
-
     def __init__(self, level_no):
         self.level = self.__get_level(level_no)
-        self.set_boxes(self.generate_boxes(
-            self.level.row_count, self.level.column_count))
+        self.set_boxes(
+            self.generate_boxes(self.level.row_count, self.level.column_count)
+        )
         self.select_box(0, 0)
         self.__mines = []
 
@@ -35,7 +35,7 @@ class minesweeper:
         box = self.__get_box(xCoord, yCoord)
         result = None
         if box is not None and box.get_state() == False:
-            next_flag_state = not(box.get_is_flagged())
+            next_flag_state = not (box.get_is_flagged())
             if next_flag_state == True:
                 if flag_count < self.level.mine_count:
                     box.set_is_flagged(next_flag_state)
@@ -65,12 +65,8 @@ class minesweeper:
                 self.lock_boxes()
                 game_over = True
             else:
-                box.set_state(True)
-                mine_count = self.get_mine_count_in_neighboord(xCoord,yCoord)
-                if mine_count > 0:
-                    box.set_tag(str(mine_count) + ":o")
-                else:
-                    box.set_tag("C:o")
+                if self.show_box(box) == 0:
+                    self.show_neighbors(box.get_xCoord(), box.get_yCoord())
                 self.__set_box(xCoord, yCoord, box)
                 game_over = False
         return game_over
@@ -82,21 +78,47 @@ class minesweeper:
                 mine.set_tag("M")
                 self.__set_box(mine.get_xCoord(), mine.get_yCoord(), mine)
 
+    def show_neighbors(self, xCoord, yCoord):
+        neighbors = util.get_neighboord(
+            xCoord, yCoord, self.level.row_count, self.level.column_count
+        )
+        for neighbor in neighbors:
+            box = self.__get_box(neighbor[0], neighbor[1])
+            self.show_box(box)
+            self.__set_box(xCoord, yCoord, box)
+
+    def show_box(self, box):
+        box.set_state(True)
+        mine_count = self.get_mine_count_in_neighboord(
+            box.get_xCoord(), box.get_yCoord()
+        )
+        if mine_count > 0:
+            box.set_tag(str(mine_count) + ":o")
+        else:
+            box.set_tag("C:o")
+        return mine_count
+
     def lock_boxes(self):
         for box in self.boxes:
-            if box.get_is_mine() == False and box.get_is_flagged() == False and box.get_tag() == "":
+            if (
+                box.get_is_mine() == False
+                and box.get_is_flagged() == False
+                and box.get_tag() == ""
+            ):
                 box.set_state(True)
                 box.set_tag(" :o")
                 self.__set_box(box.get_xCoord(), box.get_yCoord(), box)
 
-    def get_mine_count_in_neighboord(self,xCoord,yCoord):
-        boxes_matrix = list(util.split_list(self.boxes,self.level.column_count))
-        neighboord =  util.get_neighboord(xCoord,yCoord,len(boxes_matrix),len(boxes_matrix[0]))
+    def get_mine_count_in_neighboord(self, xCoord, yCoord):
+        boxes_matrix = list(util.split_list(self.boxes, self.level.column_count))
+        neighboord = util.get_neighboord(
+            xCoord, yCoord, len(boxes_matrix), len(boxes_matrix[0])
+        )
         mine_count = 0
         for neighbor in neighboord:
-           box = self.__get_box(neighbor[0],neighbor[1])
-           if box is not None and box.get_is_mine():
-               mine_count += 1
+            box = self.__get_box(neighbor[0], neighbor[1])
+            if box is not None and box.get_is_mine():
+                mine_count += 1
         return mine_count
 
     def __get_level(self, no):
