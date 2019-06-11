@@ -65,9 +65,8 @@ class minesweeper:
                 self.lock_boxes()
                 game_over = True
             else:
-                if self.show_box(box) == 0:
-                    self.show_neighbors(box.get_xCoord(), box.get_yCoord())
-                self.__set_box(xCoord, yCoord, box)
+                self.show_box_and_neighbors(box)
+                # self.__set_box(xCoord, yCoord, box)
                 game_over = False
         return game_over
 
@@ -78,14 +77,18 @@ class minesweeper:
                 mine.set_tag("M")
                 self.__set_box(mine.get_xCoord(), mine.get_yCoord(), mine)
 
-    def show_neighbors(self, xCoord, yCoord):
-        neighbors = util.get_neighboord(
-            xCoord, yCoord, self.level.row_count, self.level.column_count
-        )
-        for neighbor in neighbors:
-            box = self.__get_box(neighbor[0], neighbor[1])
-            self.show_box(box)
-            self.__set_box(xCoord, yCoord, box)
+    def show_box_and_neighbors(self, box):
+        mine_count = self.show_box(box)
+        if mine_count == 0:
+            xCoord = box.get_xCoord()
+            yCoord = box.get_yCoord()
+            neighbors = util.get_neighboord(
+                xCoord, yCoord, self.level.row_count, self.level.column_count
+            )
+            for neighbor in neighbors:
+                box = self.__get_box(neighbor[0], neighbor[1])
+                if box.get_state() is False:
+                    self.show_box_and_neighbors(box)
 
     def show_box(self, box):
         box.set_state(True)
@@ -96,6 +99,7 @@ class minesweeper:
             box.set_tag(str(mine_count) + ":o")
         else:
             box.set_tag("C:o")
+        self.__set_box(box.get_xCoord(), box.get_yCoord(), box)
         return mine_count
 
     def lock_boxes(self):
