@@ -10,7 +10,7 @@ Then, run this to play game:
 
 If your default python interpreter is Python 3, you can run `python game.py`
 
-**Playing Game**
+**Starting The Game**
 
 You'll see a game menu. Select a level to start game.
 
